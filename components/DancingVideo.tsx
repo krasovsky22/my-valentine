@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface DancingVideoProps {
@@ -9,25 +9,17 @@ interface DancingVideoProps {
 
 export function DancingVideo({ onComplete }: DancingVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
+  const handlePlay = () => {
     if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay blocked, user will need to interact
-      });
+      videoRef.current.play();
+      setIsPlaying(true);
     }
-  }, []);
+  };
 
   const handleEnded = () => {
     onComplete();
-  };
-
-  const handleClick = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-      }
-    }
   };
 
   return (
@@ -36,17 +28,42 @@ export function DancingVideo({ onComplete }: DancingVideoProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      //   transition={{ duration: 0.5 }}
-      onClick={handleClick}
     >
-      <video
-        ref={videoRef}
-        src="/video/dancing.mp4"
-        className="max-h-full max-w-full object-contain"
-        playsInline
-        muted
-        onEnded={handleEnded}
-      />
+      <div className="relative flex items-center justify-center">
+        <video
+          ref={videoRef}
+          src="/video/dancing.mp4"
+          className="max-h-[100dvh] max-w-full object-contain"
+          playsInline
+          onEnded={handleEnded}
+        />
+
+        {!isPlaying && (
+          <motion.button
+            onClick={handlePlay}
+            className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+          >
+            <motion.div
+              className="flex h-32 w-32 items-center justify-center rounded-full bg-white/90 shadow-2xl"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg
+                className="h-16 w-16 translate-x-1 text-rose-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </motion.div>
+          </motion.button>
+        )}
+      </div>
 
       <motion.button
         onClick={(e) => {

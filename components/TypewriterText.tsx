@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { TYPING_LINES } from "@/lib/constants";
@@ -9,10 +10,28 @@ interface TypewriterTextProps {
 }
 
 export function TypewriterText({ onComplete }: TypewriterTextProps) {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const { displayedLines, currentLineIndex, isTyping } = useTypewriter({
     lines: TYPING_LINES,
-    onComplete,
+    onComplete: () => {}, // Don't transition on typing complete
   });
+
+  useEffect(() => {
+    audioRef.current = new Audio("/sounds/piano.mp3");
+    audioRef.current.play().catch(() => {});
+
+    audioRef.current.onended = () => {
+      onComplete();
+    };
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [onComplete]);
 
   return (
     <motion.div

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { TYPING_LINES } from "@/lib/constants";
-import { HeartParticles } from "./HeartParticles";
+import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { TYPING_LINES } from '@/lib/constants';
+import { HeartParticles } from './HeartParticles';
 
 interface ChoiceButtonsProps {
   onYes: () => void;
@@ -12,12 +12,33 @@ interface ChoiceButtonsProps {
 
 export function ChoiceButtons({ onYes, onNo }: ChoiceButtonsProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const fireworksRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  useEffect(() => {
+    audioRef.current = new Audio('/sounds/heartbeat.mp3');
+    audioRef.current.loop = true;
+    audioRef.current.play().catch(() => {});
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
   const handleYes = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    fireworksRef.current = new Audio('/sounds/fireworks.mp3');
+    fireworksRef.current.play().catch(() => {});
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.play().catch(() => {});
       setIsPlaying(true);
     }
   };
@@ -41,7 +62,9 @@ export function ChoiceButtons({ onYes, onNo }: ChoiceButtonsProps) {
         playsInline
         onEnded={handleVideoEnded}
       />
-      <div className={`absolute inset-0 transition-opacity duration-500 ${isPlaying && !showSuccess ? "bg-black/0" : "bg-black/50"}`} />
+      <div
+        className={`absolute inset-0 transition-opacity duration-500 ${isPlaying && !showSuccess ? 'bg-black/0' : 'bg-black/50'}`}
+      />
 
       {!isPlaying && (
         <div className="relative z-10 max-w-2xl space-y-8 px-6 text-center">
@@ -51,8 +74,8 @@ export function ChoiceButtons({ onYes, onNo }: ChoiceButtonsProps) {
                 key={index}
                 className={`font-romantic text-3xl leading-relaxed sm:text-4xl md:text-5xl ${
                   index === TYPING_LINES.length - 1
-                    ? "text-rose-400"
-                    : "text-white"
+                    ? 'text-rose-400'
+                    : 'text-white'
                 }`}
               >
                 {line}
@@ -99,7 +122,7 @@ export function ChoiceButtons({ onYes, onNo }: ChoiceButtonsProps) {
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{
-              type: "spring",
+              type: 'spring',
               damping: 15,
               stiffness: 100,
               delay: 0.3,
@@ -113,24 +136,32 @@ export function ChoiceButtons({ onYes, onNo }: ChoiceButtonsProps) {
               💖
             </motion.div>
 
-            <h1 className="mb-4 font-romantic text-4xl text-white sm:text-5xl md:text-6xl">
+            <h1 className="mb-6 font-romantic text-4xl text-white sm:text-5xl md:text-6xl">
               You made the right choice!
             </h1>
 
-            <p className="font-romantic text-2xl text-rose-300">
+            <motion.p
+              className="font-romantic text-3xl text-rose-300 sm:text-6xl md:text-7xl lg:text-8xl"
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{
+                repeat: Infinity,
+                duration: 0.8,
+                ease: 'easeInOut',
+              }}
+            >
               I love you forever and always
-            </p>
+            </motion.p>
 
             <motion.div
-              className="mt-8 flex justify-center gap-2 text-2xl"
+              className="mt-10 flex justify-center gap-4 text-5xl sm:text-6xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              {["❤️", "🧡", "💛", "💚", "💙", "💜"].map((heart, i) => (
+              {['❤️', '🧡', '💛', '💚', '💙', '💜'].map((heart, i) => (
                 <motion.span
                   key={i}
-                  animate={{ y: [0, -10, 0] }}
+                  animate={{ y: [0, -15, 0] }}
                   transition={{
                     repeat: Infinity,
                     duration: 1,

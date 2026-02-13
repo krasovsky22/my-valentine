@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { HeartParticles } from "./HeartParticles";
+import { motion } from 'framer-motion';
+import { HeartParticles } from './HeartParticles';
 
 export function SuccessScreen() {
   return (
@@ -18,7 +18,7 @@ export function SuccessScreen() {
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{
-          type: "spring",
+          type: 'spring',
           damping: 15,
           stiffness: 100,
           delay: 0.2,
@@ -36,7 +36,7 @@ export function SuccessScreen() {
           You made the right choice!
         </h1>
 
-        <p className="text-lg text-rose-500/80 dark:text-rose-300/80">
+        <p className="text-md text-rose-500/80 dark:text-rose-300/80">
           I love you forever and always
         </p>
 
@@ -46,7 +46,7 @@ export function SuccessScreen() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          {["❤️", "🧡", "💛", "💚", "💙", "💜"].map((heart, i) => (
+          {['❤️', '🧡', '💛', '💚', '💙', '💜'].map((heart, i) => (
             <motion.span
               key={i}
               animate={{ y: [0, -10, 0] }}
