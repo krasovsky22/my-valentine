@@ -22,9 +22,11 @@ export function TypewriterText({ onComplete }: TypewriterTextProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/us-dining.png')" }}
+      <video
+        src="/video/us.mp4"
+        className="absolute inset-0 h-full w-full object-cover"
+        playsInline
+        muted
       />
       <div className="absolute inset-0 bg-black/50" />
 

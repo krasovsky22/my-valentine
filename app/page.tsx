@@ -1,26 +1,20 @@
-"use client";
+'use client';
 
-import { AnimatePresence } from "framer-motion";
-import { useValentineState } from "@/hooks/useValentineState";
-import { DancingVideo } from "@/components/DancingVideo";
-import { PhotoScreen } from "@/components/PhotoScreen";
-import { TypewriterText } from "@/components/TypewriterText";
-import { ChoiceButtons } from "@/components/ChoiceButtons";
-import { NoModal } from "@/components/NoModal";
-import { LetterAnimation } from "@/components/LetterAnimation";
-import { VideoPlayer } from "@/components/VideoPlayer";
-import { SuccessScreen } from "@/components/SuccessScreen";
+import { AnimatePresence } from 'framer-motion';
+import { useValentineState } from '@/hooks/useValentineState';
+import { DancingVideo } from '@/components/DancingVideo';
+import { TypewriterText } from '@/components/TypewriterText';
+import { ChoiceButtons } from '@/components/ChoiceButtons';
+import { NoModal } from '@/components/NoModal';
+import { SuccessScreen } from '@/components/SuccessScreen';
 
 export default function Home() {
   const {
     state,
     noReason,
-    goToPhoto,
     goToTyping,
     goToChoice,
     goToNoModal,
-    goToLetter,
-    goToVideo,
     goToSuccess,
     closeNoModal,
   } = useValentineState();
@@ -28,35 +22,23 @@ export default function Home() {
   return (
     <main className="min-h-[100dvh] overflow-hidden bg-background font-sans">
       <AnimatePresence mode="wait">
-        {state === "DANCING" && (
-          <DancingVideo key="dancing" onComplete={goToPhoto} />
+        {state === 'DANCING' && (
+          <DancingVideo key="dancing" onComplete={goToTyping} />
         )}
 
-        {state === "PHOTO" && (
-          <PhotoScreen key="photo" onComplete={goToTyping} />
-        )}
-
-        {state === "TYPING" && (
+        {state === 'TYPING' && (
           <TypewriterText key="typing" onComplete={goToChoice} />
         )}
 
-        {(state === "CHOICE" || state === "NO_MODAL") && (
-          <ChoiceButtons key="choice" onYes={goToLetter} onNo={goToNoModal} />
+        {(state === 'CHOICE' || state === 'NO_MODAL') && (
+          <ChoiceButtons key="choice" onYes={goToSuccess} onNo={goToNoModal} />
         )}
 
-        {state === "LETTER" && (
-          <LetterAnimation key="letter" onComplete={goToVideo} />
-        )}
-
-        {state === "VIDEO" && (
-          <VideoPlayer key="video" onComplete={goToSuccess} />
-        )}
-
-        {state === "SUCCESS" && <SuccessScreen key="success" />}
+        {state === 'SUCCESS' && <SuccessScreen key="success" />}
       </AnimatePresence>
 
       <NoModal
-        isOpen={state === "NO_MODAL"}
+        isOpen={state === 'NO_MODAL'}
         reason={noReason}
         onClose={closeNoModal}
       />

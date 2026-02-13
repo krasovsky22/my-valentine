@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface DancingVideoProps {
   onComplete: () => void;
@@ -36,7 +36,7 @@ export function DancingVideo({ onComplete }: DancingVideoProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      //   transition={{ duration: 0.5 }}
       onClick={handleClick}
     >
       <video

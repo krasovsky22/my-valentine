@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { PHOTO_DISPLAY_DURATION_MS } from "@/lib/constants";
+import { useEffect } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { PHOTO_DISPLAY_DURATION_MS } from '@/lib/constants';
 
 interface PhotoScreenProps {
   onComplete: () => void;
