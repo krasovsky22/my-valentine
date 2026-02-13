@@ -1,0 +1,26 @@
+---
+description: Valentine invite project overview
+alwaysApply: true
+---
+
+# Valentine Invite
+
+A Next.js web app for a Valentine's Day invitation.
+
+## Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **UI**: React 19, Tailwind CSS 4
+- **Language**: TypeScript 5
+
+## Structure
+
+- `app/` — App Router pages and layout
+- `app/globals.css` — Tailwind + CSS variables (light/dark)
+- `public/` — Static assets
+
+## Commands
+
+- `npm run dev` — Development server
+- `npm run build` — Production build
+- `npm run lint` — ESLint
