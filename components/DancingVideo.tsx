@@ -65,18 +65,6 @@ export function DancingVideo({ onComplete }: DancingVideoProps) {
         )}
       </div>
 
-      <motion.button
-        onClick={(e) => {
-          e.stopPropagation();
-          onComplete();
-        }}
-        className="absolute bottom-8 text-sm text-zinc-500 underline transition-colors hover:text-zinc-300"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        Skip
-      </motion.button>
     </motion.div>
   );
 }
